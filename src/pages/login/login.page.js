@@ -1,5 +1,6 @@
 import { log, page } from '../../decorators';
 import { BasePage } from '../Base.page';
+import { TodoItem } from '../../components';
 
 @page({
     route:"login", 
