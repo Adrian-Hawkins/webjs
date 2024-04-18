@@ -12,6 +12,7 @@ export default defineConfig({
           [
             "@babel/plugin-proposal-decorators",
             { loose: true, version: "2022-03" },
+            'transform-remove-imports',
           ],
         ],
       },

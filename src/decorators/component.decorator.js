@@ -4,7 +4,7 @@
  * @param {string} routetemplateURL 
  * @returns web component
  */
-export function Component({identifier, templateURL}) {
+export function Component({identifier, templateURL, styleURL}) {
     return function (constructor) {
         class ExtendedClass extends HTMLElement {
             constructor() {
@@ -13,12 +13,9 @@ export function Component({identifier, templateURL}) {
             }
             async loadTemplate() {
                 try {
-                    let args = templateURL.split('.');
-                    args.forEach(e => console.log(e));
-                    const response = await fetch(`src/components/${args[0]}/${templateURL}`);
+                    const response = await fetch(`${templateURL}`);
                     let html = await response.text();
-                    html += `<link rel="stylesheet" href="src/components/${args[0]}/${args[0]}.${args[1]}.css">`;
-                    html += `<script src="src/components/${args[0]}/${args[0]}.${args[1]}.js"></script>`;
+                    html += `<link rel="stylesheet" href="${styleURL}">`;
                     this.innerHTML = html;
                 } catch (error) {
                     console.error("Error loading template:", error);
@@ -28,6 +25,16 @@ export function Component({identifier, templateURL}) {
         Object.getOwnPropertyNames(constructor.prototype).forEach(name => {
             ExtendedClass.prototype[name] = constructor.prototype[name];
         });
+
+        const inputProperties = [];
+        Object.keys(constructor.prototype).forEach((key) => {
+            const hasInputMetadata = Reflect.getMetadata('custom:input', constructor.prototype, key);
+            if (hasInputMetadata) {
+                // inputProperties.push(key);
+                console.log('inputProperties', key);
+            }
+        });
+
         customElements.define(identifier, ExtendedClass);
         window[constructor.name] = ExtendedClass;
         return constructor;

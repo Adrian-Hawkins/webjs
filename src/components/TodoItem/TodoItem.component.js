@@ -1,11 +1,18 @@
-import { Component } from '../../decorators';
+import { Component, Input } from '../../decorators';
 
 export
 @Component({
     identifier:"todo-item", 
-    templateURL: "TodoItem.component.html"
+    templateURL: "src/components/TodoItem/TodoItem.component.html",
+    styleURL: "src/components/TodoItem/TodoItem.component.css"
 })
 class TodoItem  {
-    constructor() {
+    constructor() {}
+
+    @Input 
+    name;
+
+    sayHello() {
+        console.log('Hello');
     }
 }
