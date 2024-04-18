@@ -1,5 +1,4 @@
-export function Input(target, key, descriptor) {
-    Reflect.defineMetadata('custom:input', true, target, key);
-    return descriptor;
+export function Input(_, context) {
+    context.metadata.message = 'custom:input';
 }
   

@@ -1,7 +1,7 @@
 /**
  * Create a web component in a more user friendly way
  * @param {string} identifier
- * @param {string} routetemplateURL 
+ * @param {string} routetemplateURL
  * @returns web component
  */
 export function Component({identifier, templateURL, styleURL}) {
@@ -22,17 +22,13 @@ export function Component({identifier, templateURL, styleURL}) {
                 }
             }
         }
+
         Object.getOwnPropertyNames(constructor.prototype).forEach(name => {
             ExtendedClass.prototype[name] = constructor.prototype[name];
         });
-
-        const inputProperties = [];
-        Object.keys(constructor.prototype).forEach((key) => {
-            const hasInputMetadata = Reflect.getMetadata('custom:input', constructor.prototype, key);
-            if (hasInputMetadata) {
-                // inputProperties.push(key);
-                console.log('inputProperties', key);
-            }
+        
+        Object.getOwnPropertyNames(constructor).forEach(prop => {
+            ExtendedClass.prototype[prop] = constructor.prototype[prop];
         });
 
         customElements.define(identifier, ExtendedClass);
