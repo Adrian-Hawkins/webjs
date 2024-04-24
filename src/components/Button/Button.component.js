@@ -2,10 +2,15 @@ import { Component } from '../../decorators';
 
 export
 @Component({
-    identifier:"button-comp", 
-    templateURL: "Button.component.html"
+    identifier:"button-comp"
 })
-class Button  {
+class Button {
     constructor() {
+    }
+
+    render() {
+        return html`
+            <button>Click me</button>
+        `
     }
 }

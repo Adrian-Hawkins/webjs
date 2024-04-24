@@ -1,15 +1,22 @@
 import { defineConfig } from 'vite';
 import babel from 'vite-plugin-babel';
+import federation from '@originjs/vite-plugin-federation';
 
 export default defineConfig({
   base: "./",
   plugins: [
+    federation({
+      name: 'remote',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './sayHello': './src/sayHello.js',
+      },
+    }),
     babel({
       babelConfig: {
-        // babelrc: false,
-        // configFile: false,
         plugins: [
-          ["@babel/plugin-proposal-decorators", { "version": "2023-11" }]
+          ["@babel/plugin-proposal-decorators", { "version": "2023-11" }],
+          "@babel/plugin-transform-class-static-block"
         ],
       },
     }),
